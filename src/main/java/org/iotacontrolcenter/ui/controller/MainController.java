@@ -54,7 +54,10 @@ public class MainController implements ActionListener {
         }
         */
         if (propertySource.getNumServers() == 0) {
-            showIccDownloadDialogue();
+            Integer iotaDownloadLink = propertySource.getString(IOTA_DLD_LINK_PROP).length();
+            if(iotaDownloadLink == 0){
+                showIccDownloadDialogue();
+            }
             UiUtil.showInfoDialog(localizer.getLocalText("initialAddServerTitle"),
                     localizer.getLocalText("initialAddServerMsg"));
         } else {
@@ -260,6 +263,8 @@ public class MainController implements ActionListener {
             iccDownloadDialogue.dispose();
             iccDownloadDialogue = null;
             propertySource.setIotaDownloadLink(IOTA_DLD_LINK_PROP, downloadLink);
+            propertySource.setProperty(IOTA_DLD_LINK_PROP, downloadLink);
+            propertySource.storeProperties();
         }
     }
 
