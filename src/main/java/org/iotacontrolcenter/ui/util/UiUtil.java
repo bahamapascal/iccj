@@ -22,14 +22,12 @@ public class UiUtil {
     public static ImageIcon loadIcon(String imgFileName) {
         try {
             URL imgUrl = Main.mainFrame.getClass().getResource("/" + imgFileName);
-            if (imgUrl != null){
+            if (imgUrl != null) {
                 return new ImageIcon(imgUrl);
+            } else {
+                System.out.println("for image " + imgFileName + ", generated url is null");
             }
-            else {
-                System.out.println("for image " + imgFileName +", generated url is null");
-            }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Exception loading icon from file " + imgFileName +
                     ": " + e.getLocalizedMessage());
         }
@@ -67,28 +65,26 @@ public class UiUtil {
         // 2a01:4f8:190:32cc:0:0:0:2
         //System.out.println("isSameIpv6(" + ip1 + ", " + ip2 + ")");
 
-        if(ip1 == null || ip2 == null || ip1.isEmpty() | ip2.isEmpty()) {
+        if (ip1 == null || ip2 == null || ip1.isEmpty() | ip2.isEmpty()) {
             return false;
         }
         ip1 = ip1.toLowerCase();
         ip2 = ip2.toLowerCase();
 
-        ip1 = ip1.replace("[","");
-        ip1 = ip1.replace("]","");
-        ip2 = ip2.replace("[","");
-        ip2 = ip2.replace("]","");
+        ip1 = ip1.replace("[", "");
+        ip1 = ip1.replace("]", "");
+        ip2 = ip2.replace("[", "");
+        ip2 = ip2.replace("]", "");
 
         String normalIp1 = null;
         String normalIp2 = null;
         try {
             normalIp1 = InetAddress.getByName(ip1).toString().substring(1);
-        }
-        catch(UnknownHostException e) {
+        } catch (UnknownHostException e) {
         }
         try {
             normalIp2 = InetAddress.getByName(ip2).toString().substring(1);
-        }
-        catch(UnknownHostException e) {
+        } catch (UnknownHostException e) {
         }
         //System.out.println("normalIp1: " + normalIp1);
         //System.out.println("normalIp2: " + normalIp2);
@@ -114,10 +110,9 @@ public class UiUtil {
         String nbrUri = nbr.getUri();
         int addrSepIdx = nbrUri.indexOf("://");
         int portIdx = nbrUri.lastIndexOf(":");
-        if(addrSepIdx < 0) {
+        if (addrSepIdx < 0) {
             addrSepIdx = 0;
-        }
-        else {
+        } else {
             addrSepIdx += 3;
         }
         String nbrHost = nbrUri.substring(addrSepIdx, portIdx);
@@ -136,18 +131,16 @@ public class UiUtil {
         String iotaAddr1 = addrSepIdx < 0 ? "" : iotaUri.substring(0, addrSepIdx);
         boolean iotaAddr1IsIpv6 = isPotentialIpv6(iotaAddr1);
 
-        int addr2StartIdx = addrSepIdx >= 0 ? addrSepIdx+1 : 0;
+        int addr2StartIdx = addrSepIdx >= 0 ? addrSepIdx + 1 : 0;
         String iotaAddr2 = iotaUri.substring(addr2StartIdx, portIdx);
         boolean iotaAddr2IsIpv6 = isPotentialIpv6(iotaAddr2);
 
         boolean same = false;
-        if(nbrPort != null) {
+        if (nbrPort != null) {
             same = nbrPort.equals(iotaPort);
-        }
-        else if(iotaPort != null) {
+        } else if (iotaPort != null) {
             same = iotaPort.equals(nbrPort);
-        }
-        else {
+        } else {
             same = true;
         }
 
@@ -155,16 +148,15 @@ public class UiUtil {
         //System.out.println("nbrHost: " + nbrHost + ", iotaAddr1: " + iotaAddr1 +
         //        ", iotaAddr2: " + iotaAddr2);
 
-        if(!same) {
+        if (!same) {
             System.out.println("not same nbr,  port differs");
             return same;
         }
 
         // Compare iota addr2 first, addr1 is usually empty
-        if(nbrIsIpv6 && (iotaAddr1IsIpv6 || iotaAddr2IsIpv6)) {
+        if (nbrIsIpv6 && (iotaAddr1IsIpv6 || iotaAddr2IsIpv6)) {
             same = isSameIpv6(nbrHost, iotaAddr2) || isSameIpv6(nbrHost, iotaAddr1);
-        }
-        else {
+        } else {
             //System.out.println("nbrHost: " + nbrHost);
             //System.out.println("iotaAddr1: " + iotaAddr1);
             //System.out.println("iotaAddr2: " + iotaAddr2);
@@ -180,21 +172,21 @@ public class UiUtil {
     }
 
     public static final void showInfoDialog(String title, String msg) {
-        JOptionPane.showMessageDialog(Main.mainFrame,  msg, title,  JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(Main.mainFrame, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static final void showErrorDialog(String title, String msg) {
-        JOptionPane.showMessageDialog(Main.mainFrame,  msg, title,  JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(Main.mainFrame, msg, title, JOptionPane.ERROR_MESSAGE);
     }
 
     public static boolean disValidIpV4(String ip) {
-        if(ip == null || ip.isEmpty()) {
+        if (ip == null || ip.isEmpty()) {
             return false;
         }
-        if(ip.equalsIgnoreCase("localhost")) {
+        if (ip.equalsIgnoreCase("localhost")) {
             return true;
         }
-        if(ipV4Pattern == null) {
+        if (ipV4Pattern == null) {
             ipV4Pattern = Pattern.compile(IPV4ADDRESS_PATTERN);
         }
         return ipV4Pattern.matcher(ip).matches();
@@ -204,8 +196,7 @@ public class UiUtil {
         try {
             Integer i = Integer.parseInt(num);
             return i > 0;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -214,8 +205,7 @@ public class UiUtil {
         try {
             Integer.parseInt(num);
             return true;
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

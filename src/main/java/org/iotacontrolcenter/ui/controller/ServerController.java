@@ -88,6 +88,7 @@ public class ServerController implements ActionListener, TableModelListener {
     }
 
     public void serverSetup() {
+        System.out.print("kholl deooo");
         serverPanel.addConsoleLogLine(localizer.getLocalText("consoleLogConnectingToIccr"));
 
         SwingUtilities.invokeLater(() -> {
