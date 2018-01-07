@@ -3,6 +3,7 @@ package org.iotacontrolcenter.ui.controller;
 
 import org.iotacontrolcenter.ui.app.Constants;
 import org.iotacontrolcenter.ui.dialog.ConfigureServerDialog;
+import org.iotacontrolcenter.ui.dialog.IccDownloadDialogue;
 import org.iotacontrolcenter.ui.dialog.IccSettingsDialog;
 import org.iotacontrolcenter.ui.dialog.OpenServerDialog;
 import org.iotacontrolcenter.ui.panel.ServerPanel;
@@ -19,10 +20,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Properties;
 
+import static org.iotacontrolcenter.ui.properties.source.PropertySource.IOTA_DLD_LINK_PROP;
+
 public class MainController implements ActionListener {
 
     private IccSettingsDialog iccSettingsDialog;
     private Localizer localizer;
+    private IccDownloadDialogue iccDownloadDialogue;
     private ServerTabPanel serverTabPanel;
     private ConfigureServerDialog cfgServerDialog;
     private OpenServerDialog openServerDialog;
@@ -50,6 +54,7 @@ public class MainController implements ActionListener {
         }
         */
         if (propertySource.getNumServers() == 0) {
+            showIccDownloadDialogue();
             UiUtil.showInfoDialog(localizer.getLocalText("initialAddServerTitle"),
                     localizer.getLocalText("initialAddServerMsg"));
         } else {
@@ -62,7 +67,8 @@ public class MainController implements ActionListener {
         String action = e.getActionCommand();
         System.out.println(action);
         if (action.equals(Constants.MM_ADD_SERVER_ACTION)) {
-            showAddOrEditServerDialog(localizer.getLocalText("dialogTitleAddServer"), null, null, true);
+            showAddOrEditServerDialog(localizer.getLocalText("dialogTitleAddServer"), null,
+                    null, true);
         } else if (action.equals(Constants.MM_OPEN_SERVER_ACTION)) {
             showOpenServerDialog();
         } else if (action.equals(Constants.MM_ICC_SETTINGS_ACTION)) {
@@ -73,6 +79,8 @@ public class MainController implements ActionListener {
             cfgServerDialogSave(action);
         } else if (action.equals(Constants.DIALOG_CONFIG_SERVER_CANCEL)) {
             cfgServerDialogClose();
+        } else if (action.equals(Constants.DIALOG_ICC_DOWNLOAD_SAVE)) {
+            iccDownloadDialogClose();
         } else if (action.equals(Constants.DIALOG_ICC_SETTINGS_CANCEL)) {
             iccSettingsDialogClose();
         } else if (action.equals(Constants.DIALOG_OPEN_SERVER_CLOSE)) {
@@ -231,7 +239,7 @@ public class MainController implements ActionListener {
                 runRefresh != propertySource.getRunIotaRefresh();
         propertySource.setProperty(PropertySource.REFRESH_NBRS_PROP, nbrRefresh);
         propertySource.setProperty(PropertySource.REFRESH_NODEINFO_PROP, nodeInfoRefresh);
-        propertySource.setProperty(PropertySource.IOTA_DLD_LINK_PROP, iotaDldLink);
+        propertySource.setProperty(IOTA_DLD_LINK_PROP, iotaDldLink);
         propertySource.setProperty(PropertySource.RUN_IOTA_REFRESH_PROP, String.valueOf(runRefresh).toLowerCase());
 
         propertySource.storeProperties();
@@ -244,6 +252,15 @@ public class MainController implements ActionListener {
         }
 
         return true;
+    }
+
+    private void iccDownloadDialogClose() {
+        if (iccDownloadDialogue != null) {
+            String downloadLink = iccDownloadDialogue.iotaDownloadTextField.getText();
+            iccDownloadDialogue.dispose();
+            iccDownloadDialogue = null;
+            propertySource.setIotaDownloadLink(IOTA_DLD_LINK_PROP, downloadLink);
+        }
     }
 
     private void iccSettingsDialogClose() {
@@ -282,6 +299,24 @@ public class MainController implements ActionListener {
         if (doDelete) {
             propertySource.removeServerConfigByName(serverName);
         }
+    }
+
+    private void showIccDownloadDialogue() {
+        iccDownloadDialogue = new IccDownloadDialogue(localizer, this);
+        iccDownloadDialogue.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                iccDownloadDialogue = null;
+            }
+        });
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                iccDownloadDialogue.isShowing();
+            }
+        });
+        iccDownloadDialogue.setVisible(true);
+
     }
 
     private void showIccSettingsDialog() {
