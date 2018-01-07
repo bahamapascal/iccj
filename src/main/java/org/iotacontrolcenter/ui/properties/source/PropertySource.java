@@ -124,6 +124,10 @@ public class PropertySource {
         return getString(IOTA_DLD_LINK_PROP);
     }
 
+    public void setIotaDownloadLink(String key, String value){
+        setString(key, value);
+    }
+
     /*
     public String getWalletStartCmd() {
         return getString(WALLET_START_PROP);
@@ -405,6 +409,10 @@ public class PropertySource {
 
     public String getString(String key) {
         return _props.getProperty(key);
+    }
+
+    public void setString(String key, String value){
+        _props.setProperty(key,value);
     }
 
     public boolean getBoolean(String key) {
