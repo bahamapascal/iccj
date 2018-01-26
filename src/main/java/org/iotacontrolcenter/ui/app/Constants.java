@@ -92,4 +92,11 @@ public class Constants {
     public static final String IOTA_LOG_QP_DIRECTION_TAIL = "tail";
     public static final String IOTA_LOG_QP_DIRECTION_HEAD = "head";
     public static final Long IOTA_LOG_QP_NUMLINES_DEFAULT = 250L;
+
+    public static final String DIALOG_ICC_DOWNLOAD_SAVE = "Save";
+    public static final String MESSAGE_ICC_DOWNLOAD = "<html>" +
+            "<p>Welcome to the Iota Control Center<br>Before you start,please set the download for the latest " +
+            "IOTA version.<br>You can change the download link at any time<br> in the \"ICC setting\"" +
+            "<br><br><br></p></html>";
+    public static final String TEXT_FOR_TEXTFIELD = "IOTA client download link:";
 }
