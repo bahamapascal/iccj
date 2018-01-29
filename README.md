@@ -25,20 +25,20 @@ These instructions will create a zip file that can be deployed and unpacked onto
 
 
 ## How to install and run ICCJ
-These instructions presume you have already built or downloaded the `iccj-VERSION>.zip` file.
+These instructions presume you have already built or downloaded the `iccj-<VERSION>.zip` file.
 
 You can download the latest official ICCJ release here: [GitHub Releases](https://github.com/bahamapascal/iccj/releases) 
-Use the `iccj-VERSION>.zip` file
+(use the `iccj-VERSION>.zip` file)
 
 **For Windows**
 1. 
-1. Create a new folder and unzip the `iccj-VERSION>.zip` file
+1. Create a new folder and unzip the `iccj-<VERSION>.zip` file
 2. Start the ICCJ by executing the icc.bat file in `~\bin`
 
 **For Ubuntu/iOS**
 1. Create a new folder `mkdir ICCJ`
 2. Change directory `cd ICCJ`
-3. Unzip into ICCJ folder `unzip path/to/iccj-VERSION>.zip -d path/to/ICCJ`
+3. Unzip into ICCJ folder `unzip path/to/iccj-<VERSION>.zip -d path/to/ICCJ`
 4. Start ICCJ by executing `path/to/ICCJ/bin/icc`
 
 
