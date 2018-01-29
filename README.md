@@ -43,8 +43,9 @@ You can download the latest official ICCJ release here: [GitHub Releases](https:
 
 
 
+### ICCJ User Guide
 
-
+Please finde the user guide in our GitHub Wiki [here](https://github.com/bahamapascal/iccj/wiki/First-Time-Usage)
 
 
 
