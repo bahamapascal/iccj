@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <iccr.group.id>org.iotacontrolcenter</iccr.group.id>
-    <version.iccr>1.0.0-rc3</version.iccr>
+    <version.iccr>1.0.0</version.iccr>
 
     <version.apache-httpclient>4.5.2</version.apache-httpclient>
     <version.commons-io>2.4</version.commons-io>
